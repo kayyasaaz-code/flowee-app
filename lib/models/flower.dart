@@ -6,8 +6,8 @@ class Flower {
   final String id;
   final String name;
   final String category;
-  final Double price;
-  final Double rating;
+  final double price;
+  final double rating;
   final String description;
   final String imageUrl;
   final IconData icon;
