@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//ini buat carousel animasi slider ke samping nya
+//ini buat dot carousel animasi slider ke samping nya
 
 class CarouselDots extends StatelessWidget {
   const CarouselDots({
