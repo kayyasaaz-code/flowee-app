@@ -55,34 +55,33 @@ class _BannerCarouselState extends State<BannerCarousel> {
 
   @override
   Widget build(BuildContext context) {
-     if (widget.banners.isEmpty) {return const SizedBox.shrink();} //buat mengembalikan widget kosong, klo gaada banner
-      return Column(
-        children: [
-          SizedBox(
-            height: 168,
-            child: PageView.builder(
-              controller: _controller,
-              itemCount: widget.banners.length,
-              /**
+    if (widget.banners.isEmpty) {
+      return const SizedBox.shrink();
+    } //buat mengembalikan widget kosong, klo gaada banner
+    return Column(
+      children: [
+        SizedBox(
+          height: 168,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: widget.banners.length,
+            /**
                * dipanggil juga saat pengguna swipe manual ke banner selanjutnya, bukan cuman saat di geser otomatis oleh timer
                * supaya titik indikator di bawah selalu sinkron dengam banner yang sedang tampil, kita harus mengupdate _page saat pengguna swipe manual
                */
-              onPageChanged: (index) => setState(() => _page = index )
-              //ingin menampilkan data data yang ada di list banner, dan di urutin secara index
-              itemBuilder: (context, index) => BannerSlide(
-                banner: widget.banners[index]
-                ), 
-              ) ,
+            onPageChanged: (index) => setState(() => _page = index),
+            //ingin menampilkan data data yang ada di list banner, dan di urutin secara index
+            itemBuilder: (context, index) =>
+                BannerSlide(banner: widget.banners[index]),
           ),
-          SizedBox(height: 10,),
-          CarouselDots(
-            count: widget.banners.length,
-            activeIndex: _page,
-            activeColor: widget.banners[_page].gradientColors.first,
-          )
-        ],
-      );
-       
-     }
+        ),
+        SizedBox(height: 10),
+        CarouselDots(
+          count: widget.banners.length,
+          activeIndex: _page,
+          activeColor: widget.banners[_page].gradientColors.first,
+        ),
+      ],
+    );
   }
-
+}
