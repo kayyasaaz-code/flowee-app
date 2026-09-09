@@ -1,17 +1,17 @@
 import 'package:flowee_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({
+class QuantitySteppert extends StatelessWidget {
+  const QuantitySteppert({
     super.key,
     required this.quantity,
     required this.onIncrement,
-    required this.onDicrement,
+    required this.onDecrement,
   });
 
   final int quantity;
   final VoidCallback onIncrement;
-  final VoidCallback onDicrement;
+  final VoidCallback onDecrement;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class MyWidget extends StatelessWidget {
         Row(
           children: [
             //definisikan kelas steper button
-            _StepperButton(icon: Icons.remove_rounded, onTap: onDicrement),
+            _StepperButton(icon: Icons.remove_rounded, onTap: onDecrement),
             Padding(
               padding: EdgeInsetsGeometry.symmetric(horizontal: 18),
               child: Text(
