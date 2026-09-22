@@ -15,7 +15,7 @@ class AuthController extends ValueNotifier<bool> {
 
   Future<void> loadPersistedSession() async {
     final prefs = await SharedPreferences.getInstance();
-    value = prefs.getBool(_prefskey) ?? false;
+    value = prefs.getBool(_prefsKey) ?? false;
   }
 
   Future<void> login() async {
