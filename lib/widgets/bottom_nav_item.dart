@@ -39,6 +39,7 @@ class BottomNavItem extends StatelessWidget {
               size: 22,
               color: selected ? AppTheme.primary : Colors.transparent,
             ),
+            //tidak membiarkan sebuah widget teks muncul secara tiba tiba
             AnimatedSize(
               duration: Duration(milliseconds: 220),
               curve: Curves.easeOut,
