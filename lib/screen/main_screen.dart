@@ -48,6 +48,14 @@ class _MainScreenState extends State<MainScreen> {
                   onTap: () => setState(() => _selectedIndex = 0),
                 ),
               ),
+              Expanded(
+                child: BottomNavItem(
+                  icon: Icons.favorite_rounded,
+                  label: 'Favorite',
+                  selected: _selectedIndex == 1,
+                  onTap: () => setState(() => _selectedIndex = 1),
+                ),
+              ),
             ],
           ),
         ),
