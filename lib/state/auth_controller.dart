@@ -8,7 +8,7 @@ class AuthController extends ValueNotifier<bool> {
 
   static final AuthController instance = AuthController._();
 
-  static const _prefsKey = 'flowee_is_logges_in';
+  static const _prefsKey = 'Haeka_is_logges_in';
 
   // di panggil sekali saat aplikasi baru di buka (muncul splassh screen),
   //untuk membaca sttus login yng tersimpan dari sesi SEBELUMNYA

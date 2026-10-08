@@ -1,20 +1,21 @@
-import 'package:flowee_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'screen/splash_screen.dart';
+import 'theme/app_theme.dart';
 
 void main() {
-  runApp(FloweeApp());
+  runApp(const KopkenApp());
 }
 
-class FloweeApp extends StatelessWidget {
-  const FloweeApp({super.key});
+class KopkenApp extends StatelessWidget {
+  const KopkenApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Flower app",
+      title: "Kopken App",
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
-      home: Placeholder(),
+      home: const SplashScreen(),
     );
   }
 }

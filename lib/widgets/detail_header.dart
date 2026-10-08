@@ -1,15 +1,14 @@
-import 'package:flowee_app/models/flower.dart';
-import 'package:flowee_app/state/favourite_controller.dart';
-import 'package:flowee_app/theme/app_theme.dart';
-import 'package:flowee_app/widgets/circle_icon_button.dart';
-import 'package:flowee_app/widgets/flower_image.dart';
-
 import 'package:flutter/material.dart';
+import '../models/coffee.dart';
+import '../state/favourite_controller.dart';
+import '../theme/app_theme.dart';
+import 'circle_icon_button.dart';
+import 'coffe_image.dart';
 
 class DetailHeader extends StatelessWidget {
   const DetailHeader({super.key, required this.flower, required this.onBack});
 
-  final Flower flower;
+  final Coffee flower;
   final VoidCallback onBack;
 
   @override

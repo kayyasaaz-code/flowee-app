@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-class Flower {
+class Coffee {
   final String id;
   final String name;
   final String category;
@@ -13,7 +13,7 @@ class Flower {
   final IconData icon;
   final Color color;
 
-  Flower({
+  Coffee({
     required this.id,
     required this.name,
     required this.category,

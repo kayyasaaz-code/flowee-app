@@ -1,9 +1,12 @@
-import 'package:flowee_app/data/dummy_data.dart';
-import 'package:flowee_app/models/flower.dart';
-import 'package:flowee_app/screen/detail_screen.dart';
-import 'package:flowee_app/widgets/flower_card.dart';
-import 'package:flowee_app/widgets/home_content_header.dart';
 import 'package:flutter/material.dart';
+import 'package:kopkenApp/widgets/banner_carousel.dart';
+import '../data/dummy_data.dart';
+import '../models/coffee.dart';
+import '../screen/detail_screen.dart';
+import '../screen/favorite_screen.dart';
+import '../widgets/category_chip_list.dart';
+import '../widgets/coffe_card.dart'; // Pastikan nama file widget kartu sesuai
+import '../widgets/home_header.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,77 +17,123 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _query = '';
-  String _selectedCategory = 'Semua';
+  String _selectedCategory = 'Dreamy Choco Series';
 
-  //method geter
-  List<String> get _categories {
-    final unique = <String>{'Semua', ...dummyFlowers.map((f) => f.category)};
-    return unique.toList();
-  }
-
-  List<Flower> get _filteredFlowers {
-    return dummyFlowers.where((flower) {
-      final matchesQuery = flower.name.toLowerCase().contains(
+  // Getter filter kopi berdasarkan query pencarian dan kategori
+  List<Coffee> get _filteredCoffees {
+    return dummyCoffees.where((coffee) {
+      final matchesQuery = coffee.name.toLowerCase().contains(
         _query.toLowerCase(),
-      ); //buat bikin tetep kebaca event itu huruf nya kapital ataupun bukan
+      );
       final matchesCategory =
-          _selectedCategory == 'Semua' ||
-          flower.category ==
-              _selectedCategory; // harus matching sama keyword category buah potong dan tanaman hias
+          _selectedCategory == 'Semua' || coffee.category == _selectedCategory;
       return matchesQuery && matchesCategory;
     }).toList();
   }
 
-  //function untuk mengahndle perpindahan dari home screen ke detail screen
-
-  void _openDetail(Flower flower) {
+  void _openDetail(Coffee coffee) {
     Navigator.of(
       context,
-    ).push(MaterialPageRoute(builder: (_) => DetailScreen(flower: flower)));
+    ).push(MaterialPageRoute(builder: (_) => DetailScreen(coffee: coffee)));
   }
 
   @override
   Widget build(BuildContext context) {
-    final flowers = _filteredFlowers;
+    final coffees = _filteredCoffees;
 
-    return SafeArea(
-      //biar bisa ngescroll si layarnya
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: HomeContentHeader(
-              selectedCategory: _selectedCategory,
-              categories: _categories,
-              onQueryChanged: (value) => setState(() => _query = value),
-              onCategorySelected: (value) =>
-                  setState(() => _selectedCategory = value),
-            ),
-          ),
-          if (flowers.isEmpty)
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Center(child: Text('Bunga Tiddak Ditemukan!')),
-            )
-          else
-            SliverPadding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 100),
-              sliver: SliverGrid(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 0.68,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => FlowerCard(
-                    flower: flowers[index],
-                    onTap: () => _openDetail(flowers[index]),
-                  ),
-                  childCount: flowers.length,
-                ),
+    return Scaffold(
+      backgroundColor: Colors.grey.shade50,
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            // 1. Header Cokelat & Banner Carousel
+            SliverToBoxAdapter(
+              child: HomeHeader(
+                onQueryChanged: (value) => setState(() => _query = value),
+                bannerWidget: BannerCarousel(banners: dummyBanners),
+                // Callback ketika ikon Favorite di header diklik
+                onFavoriteTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const FavoriteScreen()),
+                  );
+                },
+                // Callback ketika ikon Profile di header diklik
+                onProfileTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Halaman Profile akan segera hadir!'),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                },
               ),
             ),
-        ],
+
+            // 2. Space Kompensasi untuk Banner yang Menumpuk (Overlapping)
+            const SliverToBoxAdapter(child: SizedBox(height: 85)),
+
+            // 3. Category Chip List (List Kategori Kopi Circular)
+            SliverToBoxAdapter(
+              child: CategoryChipList(
+                categories: dummyCategories,
+                selectedCategory: _selectedCategory,
+                onCategorySelected: (categoryName) {
+                  setState(() {
+                    _selectedCategory = categoryName;
+                  });
+                },
+                onSeeAllTap: () {
+                  setState(() {
+                    _selectedCategory = 'Semua';
+                  });
+                },
+              ),
+            ),
+
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+
+            // 4. Area Grid Produk Kopi (Menggunakan CoffeCard)
+            if (coffees.isEmpty)
+              const SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(
+                  child: Text(
+                    'Kopi Tidak Ditemukan!',
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ),
+              )
+            else
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                sliver: SliverGrid(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final coffee = coffees[index];
+                    return CoffeCard(
+                      coffee: coffee,
+                      onTap: () => _openDetail(coffee),
+                      onAddTap: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              '${coffee.name} ditambahkan ke keranjang!',
+                            ),
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
+                      },
+                    );
+                  }, childCount: coffees.length),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 0.68,
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

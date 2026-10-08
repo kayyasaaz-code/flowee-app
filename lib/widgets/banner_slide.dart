@@ -1,5 +1,5 @@
-import 'package:flowee_app/models/promo_banner.dart';
 import 'package:flutter/material.dart';
+import 'package:kopkenApp/models/promo_banner.dart';
 
 class BannerSlide extends StatelessWidget {
   const BannerSlide({super.key, required this.banner});
@@ -8,69 +8,39 @@ class BannerSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 2),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(22),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.network(
-              banner.imageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) =>
-                  Container(color: banner.gradientColors.first),
-              loadingBuilder: (context, child, progress) {
-                if (progress == null) return child;
-                return Container(color: banner.gradientColors.first);
-              },
-            ),
-            /**
-             * image.network yang akan di kombinasikan dengan stack dan gradiasi,dan akan di berikan sentuhan transparansi
-             */
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    banner.gradientColors.first.withValues(alpha: 0.92),
-                    banner.gradientColors.last.withValues(alpha: 0.35),
-                  ],
-                ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: SizedBox(
+        width: double.infinity,
+        height: 150,
+        child: Image.network(
+          banner.imageUrl,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: Colors.grey.shade200,
+              alignment: Alignment.center,
+              child: const Icon(
+                Icons.image_not_supported_outlined,
+                color: Colors.grey,
+                size: 32,
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(22, 20, 90, 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+            );
+          },
+          loadingBuilder: (context, child, progress) {
+            if (progress == null) {
+              return child;
+            }
 
-                children: [
-                  Text(
-                    banner.title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w800,
-                      height: 1.2,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    banner.subtitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.92),
-                      fontSize: 13,
-                      height: 1.35,
-                    ),
-                  ),
-                ],
+            return Container(
+              color: Colors.grey.shade100,
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator(
+                color: Color(0xFF60212D),
+                strokeWidth: 2,
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

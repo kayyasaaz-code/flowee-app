@@ -1,12 +1,9 @@
-import 'package:flowee_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 
-/**
- * widget ini tidak menyimpan teks yang di ketik penggunanya sendiri,
- * setiap kali user mengetik, "onchanged" akan di panggil dan home scrren yang akan menyimpan teks nya lalu
- * memakainya untuk mefilter daftar produk, ini contoh lain dari bola "lifting state up"
- */
-
+/// Widget ini tidak menyimpan teks yang diketik penggunanya sendiri.
+/// Setiap kali user mengetik, "onChanged" akan dipanggil dan HomeScreen yang akan menyimpan teksnya lalu
+/// memakainya untuk memfilter daftar produk (penerapan "lifting state up").
 class SearchField extends StatelessWidget {
   const SearchField({super.key, required this.onChanged});
 
@@ -16,12 +13,30 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onChanged: onChanged,
+      style: const TextStyle(color: Colors.white, fontSize: 14),
       decoration: InputDecoration(
-        hintText: "cari mawar, TUlip, Anggrek...",
-        hintStyle: TextStyle(color: AppTheme.textSecondary, fontSize: 13.5),
-        prefixIcon: Icon(Icons.search_rounded, color: AppTheme.textSecondary),
+        hintText: "Search coffee...",
+        hintStyle: TextStyle(
+          color: Colors.white.withOpacity(0.7),
+          fontSize: 13.5,
+        ),
+        prefixIcon: const Icon(Icons.search_rounded, color: Colors.white),
+        filled: true,
+        fillColor: AppTheme.accentBeige,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
         ),
       ),

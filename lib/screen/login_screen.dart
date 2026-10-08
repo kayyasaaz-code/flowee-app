@@ -1,11 +1,11 @@
-import 'package:flowee_app/data/dummy_data.dart';
-import 'package:flowee_app/screen/main_screen.dart';
-import 'package:flowee_app/state/auth_controller.dart';
-import 'package:flowee_app/theme/app_theme.dart';
-import 'package:flowee_app/widgets/decorative_glow.dart';
-import 'package:flowee_app/widgets/login_brand_header.dart';
-import 'package:flowee_app/widgets/login_form_card.dart';
 import 'package:flutter/material.dart';
+import '../data/dummy_data.dart';
+import '../screen/main_screen.dart';
+import '../state/auth_controller.dart';
+import '../theme/app_theme.dart';
+import '../widgets/decorative_glow.dart';
+import '../widgets/login_brand_header.dart';
+import '../widgets/login_form_card.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKeey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController(text: DummyUser.email);
   final _passwordController = TextEditingController(text: DummyUser.password);
   bool _isLoading = false;
@@ -28,11 +28,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
-    if (!_formKeey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
 
-    await Future.delayed(Duration(milliseconds: 600));
+    await Future.delayed(const Duration(milliseconds: 600));
 
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ).pushReplacement(MaterialPageRoute(builder: (_) => const MainScreen()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Email atau password salah. Mohon dicoba kembali'),
         ),
       );
@@ -69,8 +69,6 @@ class _LoginScreenState extends State<LoginScreen> {
             colors: [AppTheme.primary, AppTheme.primaryDark],
           ),
         ),
-        // Stack menumpuk beberapa widget di atas satu sama lain. Di sini:
-        // hiasan glow paling belakang, lalu konten form di atasnya.
         child: Stack(
           children: [
             const Positioned(top: -70, right: -50, child: DecorativeGlow(220)),
@@ -89,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const LoginBrandHeader(),
                     const SizedBox(height: 36),
                     LoginFormCard(
-                      formKey: _formKeey,
+                      formKey: _formKey,
                       emailController: _emailController,
                       passwordController: _passwordController,
                       isLoading: _isLoading,

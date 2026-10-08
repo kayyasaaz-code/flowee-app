@@ -1,11 +1,11 @@
 // import 'package:flowee_app/main.dart';
-import 'package:flowee_app/models/flower.dart';
-import 'package:flowee_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:kopkenApp/models/coffee.dart';
+import '../theme/app_theme.dart';
 
 class ProductSummary extends StatelessWidget {
   const ProductSummary({super.key, required this.flower});
-  final Flower flower;
+  final Coffee flower;
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +32,21 @@ class ProductSummary extends StatelessWidget {
 class _CategoryBadge extends StatelessWidget {
   const _CategoryBadge({required this.text});
   final String text;
-
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: AppTheme.leaf.withValues(alpha: 0.12),
+        // Menggunakan primarySoft (#81404A)
+        color: AppTheme.primarySoft.withOpacity(
+          0.12,
+        ), // atau withValues(alpha: 0.12)
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         text,
         style: TextStyle(
-          color: AppTheme.leaf,
+          color: AppTheme.primarySoft,
           fontSize: 11,
           fontWeight: FontWeight.w700,
         ),

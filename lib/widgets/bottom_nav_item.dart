@@ -1,5 +1,5 @@
-import 'package:flowee_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 
 class BottomNavItem extends StatelessWidget {
   const BottomNavItem({
@@ -35,9 +35,9 @@ class BottomNavItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
+              color: selected ? AppTheme.primary : Colors.grey,
               icon,
               size: 22,
-              color: selected ? AppTheme.primary : Colors.transparent,
             ),
             //tidak membiarkan sebuah widget teks muncul secara tiba tiba
             AnimatedSize(

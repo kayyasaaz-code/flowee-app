@@ -1,16 +1,17 @@
-import 'package:flowee_app/models/flower.dart';
-import 'package:flowee_app/theme/app_theme.dart';
-import 'package:flowee_app/widgets/detail_header.dart';
-import 'package:flowee_app/widgets/detail_total.dart';
-import 'package:flowee_app/widgets/product_summary.dart';
-import 'package:flowee_app/widgets/quantity_steppert.dart';
-import 'package:flowee_app/widgets/sheet_drag_andle.dart';
+import 'package:flutter/material.dart';
+import '../models/coffee.dart';
+import '../theme/app_theme.dart';
+import '../widgets/detail_header.dart';
+import '../widgets/detail_total.dart';
+import '../widgets/product_summary.dart';
+import '../widgets/quantity_steppert.dart';
+import '../widgets/sheet_drag_andle.dart';
 
 import 'package:flutter/material.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key, required this.flower});
-  final Flower flower;
+  const DetailScreen({super.key, required this.coffee});
+  final Coffee coffee;
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -33,7 +34,7 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   void _addToCart() {
-    final flower = widget.flower;
+    final flower = widget.coffee;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('$_quantity x ${flower.name} ditambahkan ke keranjang'),
@@ -43,7 +44,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final flower = widget.flower; //biar gampang ngambil data dari bunga
+    final flower = widget.coffee; //biar gampang ngambil data dari bunga
 
     return Scaffold(
       backgroundColor: Colors.white,

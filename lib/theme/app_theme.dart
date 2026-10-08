@@ -2,14 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color primary = Color(0xFFD6336C);
-  static const Color primaryDark = Color(0xFFA0224D);
-  static const Color primarySoft = Color(0xFFF7D9E3);
-  static const Color leaf = Color(0xFF4C7A5D);
-  static const Color background = Color(0xFFFFFAF6);
-  static const Color surface = Colors.white;
-  static const Color textPrimary = Color(0xFF2B2730);
-  static const Color textSecondary = Color(0xFF938C97);
+  // Merah Maroon Utama (#60212D) -> Untuk Tombol CTA (+), Kategori Aktif
+  static const Color primary = Color(0xFF5B3827);
+
+  // Merah Soft / Secondary (#81404A) -> Untuk Badge Promo, Hover, Tag
+  static const Color primarySoft = Color(0xFF81404A);
+
+  // Cokelat Tua (#5B3827) -> Untuk Header, Title, Text Utama
+  static const Color primaryDark = Color(0xFF60212D);
+
+  // Warm Beige (#D9A484) -> Untuk Card Container, Search Bar, Accent
+  static const Color accentBeige = Color(0xFFD9A484);
+
+  // Background & Surface Clean (Putih)
+  static const Color background = Color(0xFFFFFFFF); // Putih bersih
+  static const Color surface = Color(0xFFFFFFFF); // Putih bersih
+  static const Color cardSurface = Color(
+    0xFFF9F6F0,
+  ); // Opsional: Krem super lembut buat card
+
+  // Text Colors
+  static const Color textPrimary = Color(
+    0xFF5B3827,
+  ); // Cokelat pekat (pengganti hitam pekat)
+  static const Color textSecondary = Color(
+    0xFF9E9E9E,
+  ); // Abu-abu soft untuk deskripsi
 
   /// Elegant serif used for the brand wordmark and product/section headings.
   static TextStyle display({
@@ -103,16 +121,16 @@ class AppTheme {
 
 //function untuk handle konversi digit angka untuk harga, yang sebelum nya berformat double menjadi string
 String formatRupiah(double price) {
-  final str = price.toStringAsFixed(0);
+  final str = price.toInt().toString();
   final buffer = StringBuffer();
+  final length = str.length;
 
-  for (int i = 0; i < str.length; i++) {
-    final posFormed = str.length - i;
-    buffer.write(str[i]);
-    if (posFormed > 1 && posFormed % 3 == 1) {
+  for (int i = 0; i < length; i++) {
+    if (i > 0 && (length - i) % 3 == 0) {
       buffer.write('.');
     }
+    buffer.write(str[i]);
   }
 
-  return "";
+  return "Rp ${buffer.toString()}";
 }
